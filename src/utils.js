@@ -1,3 +1,16 @@
+export async function dict(word) {
+  console.log(word);
+  if (word) {
+    const response = await fetch(
+      `https://api.safone.me/dictionary?query=${word}`
+    );
+    const data = await response.json();
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } else return error();
+}
+
 export function convert(value, param) {
   let rsp = "";
   if (param === "error") return error();
