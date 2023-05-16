@@ -39,7 +39,7 @@ export async function advice() {
 
 export function greet(name) {
   if (!name) {
-    return new Response("Please provide a name parameter", { status: 400 });
+    return new Response("Hello User");
   }
   return new Response(`Hello, ${name}!`, {
     headers: { "content-type": "text/plain" },
