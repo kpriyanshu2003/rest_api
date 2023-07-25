@@ -5,7 +5,7 @@ const path = require("path");
 const app = express();
 const port = 3000;
 const fs = require("fs");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const mustacheExpress = require("mustache-express");
 
 const checkAuth = (req, res, next) => {
@@ -31,18 +31,18 @@ const setCustomHeader = (req, res, next) => {
   res.removeHeader("x-powered-by");
   next();
 };
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "logs", "access.log"),
-  {
-    flags: "a",
-  }
-);
-const customFormat =
-  ':url :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length] ":referrer" ":user-agent"';
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, "logs", "access.log"),
+//   {
+//     flags: "a",
+//   }
+// );
+// const customFormat =
+//   ':url :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length] ":referrer" ":user-agent"';
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(morgan(customFormat, { stream: accessLogStream }));
+// app.use(morgan(customFormat, { stream: accessLogStream }));
 app.use(setCustomHeader);
 app.use(checkAuth);
 app.engine("mustache", mustacheExpress());
