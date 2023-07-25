@@ -18,7 +18,7 @@ function addUser(val: string): boolean {
 }
 
 function auth(req: Request, res: Response) {
-  if (req.query.token === "helloworld723121" && req.query.user) {
+  if (req.query.token === process.env.AUTHTOKEN && req.query.user) {
     if (!addUser(req.query.user as string)) res.sendStatus(500);
     else res.send("Added User");
   } else res.sendStatus(401);
