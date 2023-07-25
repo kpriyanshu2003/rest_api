@@ -18,7 +18,7 @@ const data = {
 };
 
 // Define a route to render the template
-router.get("/vie", templating);
+router.get("/template", templating);
 
 router.get("/auth", auth);
 router.get("/tool", tool);
