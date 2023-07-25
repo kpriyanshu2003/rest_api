@@ -3,10 +3,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-// const port = 3000;
 const fs = require("fs");
-// const morgan = require("morgan");
 const mustacheExpress = require("mustache-express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const checkAuth = (req, res, next) => {
   if (req.path === "/profile" && req.query.auth) {
@@ -31,18 +32,9 @@ const setCustomHeader = (req, res, next) => {
   res.removeHeader("x-powered-by");
   next();
 };
-// const accessLogStream = fs.createWriteStream(
-//   path.join(__dirname, "logs", "access.log"),
-//   {
-//     flags: "a",
-//   }
-// );
-// const customFormat =
-//   ':url :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms - :res[content-length] ":referrer" ":user-agent"';
 
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(morgan(customFormat, { stream: accessLogStream }));
 app.use(setCustomHeader);
 app.use(checkAuth);
 app.engine("mustache", mustacheExpress());
@@ -57,19 +49,13 @@ app.use(function (req, res) {
   res.status(404).sendFile(path.join(__dirname, "static", "404.html"));
 });
 
-// const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config();
-
-// mongoose
-//   .connect(process.env.DATABASE_URL)
-//   .then(() =>
-//     app.listen(port, () => {
-//       console.log(`Database Connected and server is running on port ${port}`);
-//     })
-//   )
-//   .catch((err) => console.log(err));
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server running at http://localhost:${process.env.PORT}`);
-});
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() =>
+    app.listen(process.env.PORT, () => {
+      console.log(
+        `Database Connected and server is running on port ${process.env.PORT}`
+      );
+    })
+  )
+  .catch((err) => console.log(err));

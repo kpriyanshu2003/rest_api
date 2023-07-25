@@ -7,27 +7,21 @@ const { bully, quote, joke, fact, advice, greet } = require("./src/fun");
 const { convert } = require("./src/convert");
 const { test, templating } = require("./src/test");
 const { auth, tool, profile } = require("./src/question");
-
-const { getAllUser, signup } = require("./controllers/user-controller"); // test - DB
-router.get("/userData", getAllUser); //test - DB
-router.post("/addUser", signup); // test - DB
-
-const data = {
-  pageTitle: "Express with Mustache",
-  message: "Hello, this is an example of using Mustache with Express!",
-};
-
-// Define a route to render the template
-router.get("/template", templating);
-
-router.get("/auth", auth);
-router.get("/tool", tool);
-router.get("/profile", profile);
+const { getAllUser, signup } = require("./controllers/user-controller");
 
 router.get("/convert", (req, res) => {
   res.send(convert(req.query));
 });
+router.get("/greet", (req, res) => {
+  res.send(greet());
+});
 
+router.get("/userData", getAllUser);
+router.post("/addUser", signup);
+router.get("/template", templating);
+router.get("/auth", auth);
+router.get("/tool", tool);
+router.get("/profile", profile);
 router.get("/time", time);
 router.get("/date", date);
 router.get("/bully", bully);
@@ -35,10 +29,6 @@ router.get("/joke", joke);
 router.get("/advice", advice);
 router.get("/fact", fact);
 router.get("/quote", quote);
-
-router.get("/greet", (req, res) => {
-  res.send(greet());
-});
 
 router.get("/test", (req, res) => {
   console.log("\n------------------");
