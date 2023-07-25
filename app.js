@@ -70,6 +70,6 @@ dotenv.config();
 //   )
 //   .catch((err) => console.log(err));
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running at http://localhost:${process.env.PORT}`);
+app.listen(9000, () => {
+  console.log(`Server running at http://localhost:${9000}`);
 });
