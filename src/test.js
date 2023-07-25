@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.test = void 0;
+exports.templating = exports.test = void 0;
 function fetchWordMeaning(word) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -52,3 +52,30 @@ function test(val) {
     }
 }
 exports.test = test;
+const data = {
+    posts: [
+        {
+            title: "First Blog Post",
+            author: "John Doe",
+            date: "2023-07-23",
+            content: "<p>This is the content of my first blog post.</p>",
+        },
+        {
+            title: "Second Blog Post",
+            author: "Jane Smith",
+            date: "2023-07-25",
+            content: "<p>This is the content of my second blog post.</p>",
+        },
+        {
+            title: "Third Blog Post",
+            author: "Priyanshu Kumar",
+            date: "2023-07-25",
+            content: "<p>This is created using a template engine known as Mustache, this is quite easy to use and looks almost like generic HTML, CSS and JS. Also, I can use it easily alongside Express easily.",
+        },
+        // Add more blog posts here...
+    ],
+};
+function templating(req, res) {
+    res.render("custom", data);
+}
+exports.templating = templating;
