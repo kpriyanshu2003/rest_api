@@ -1,0 +1,2 @@
+Here, model contains the schema for the data base.
+Here, controllers contain the function that handle storing and displaying function related to db.
