@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const app = express();
-const port = 3000;
+// const port = 3000;
 const fs = require("fs");
 // const morgan = require("morgan");
 const mustacheExpress = require("mustache-express");
@@ -58,8 +58,8 @@ app.use(function (req, res) {
 });
 
 // const mongoose = require("mongoose");
-// const dotenv = require("dotenv");
-// dotenv.config();
+const dotenv = require("dotenv");
+dotenv.config();
 
 // mongoose
 //   .connect(process.env.DATABASE_URL)
