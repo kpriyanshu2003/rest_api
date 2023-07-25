@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const fs = require("fs");
 const morgan = require("morgan");
+const mustacheExpress = require("mustache-express");
 
 const checkAuth = (req, res, next) => {
   if (req.path === "/profile" && req.query.auth) {
@@ -44,6 +45,9 @@ app.use(bodyParser.json());
 app.use(morgan(customFormat, { stream: accessLogStream }));
 app.use(setCustomHeader);
 app.use(checkAuth);
+app.engine("mustache", mustacheExpress());
+app.set("view engine", "mustache");
+app.set("views", __dirname + "/views");
 
 app.use(express.static(path.join(__dirname, "static")));
 const server = require("./server");

@@ -5,12 +5,20 @@ const router = express.Router();
 const { date, time } = require("./src/datentime");
 const { bully, quote, joke, fact, advice, greet } = require("./src/fun");
 const { convert } = require("./src/convert");
-const { test } = require("./src/test");
+const { test, templating } = require("./src/test");
 const { auth, tool, profile } = require("./src/question");
 
 const { getAllUser, signup } = require("./controllers/user-controller"); // test - DB
 router.get("/userData", getAllUser); //test - DB
 router.post("/addUser", signup); // test - DB
+
+const data = {
+  pageTitle: "Express with Mustache",
+  message: "Hello, this is an example of using Mustache with Express!",
+};
+
+// Define a route to render the template
+router.get("/vie", templating);
 
 router.get("/auth", auth);
 router.get("/tool", tool);
