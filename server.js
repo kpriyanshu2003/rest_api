@@ -12,9 +12,6 @@ const { getAllUser, signup } = require("./controllers/user-controller");
 router.get("/convert", (req, res) => {
   res.send(convert(req.query));
 });
-router.get("/greet", (req, res) => {
-  res.send(greet());
-});
 
 router.get("/userData", getAllUser);
 router.post("/addUser", signup);
@@ -29,6 +26,7 @@ router.get("/joke", joke);
 router.get("/advice", advice);
 router.get("/fact", fact);
 router.get("/quote", quote);
+router.get("/greet", greet);
 
 router.get("/test", (req, res) => {
   console.log("\n------------------");

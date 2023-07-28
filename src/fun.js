@@ -62,9 +62,10 @@ function advice(req, res) {
         res.status(500).json({ advice: "Internal Server Error" });
 }
 exports.advice = advice;
-function greet(name) {
+function greet(req, res) {
+    const name = req.query.name;
     if (typeof name === "string")
-        return { message: `Hello ${name}!` };
-    return { message: "Hello User!" };
+        res.json({ message: `Hello ${name}!` });
+    res.json({ message: "Hello User!" });
 }
 exports.greet = greet;

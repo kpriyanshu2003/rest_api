@@ -48,9 +48,10 @@ function advice(req: Request, res: Response) {
   else res.status(500).json({ advice: "Internal Server Error" });
 }
 
-function greet(name: string | undefined) {
-  if (typeof name === "string") return { message: `Hello ${name}!` };
-  return { message: "Hello User!" };
+function greet(req: Request, res: Response) {
+  const name = req.query.name as string;
+  if (typeof name === "string") res.json({ message: `Hello ${name}!` });
+  res.json({ message: "Hello User!" });
 }
 
 export { bully, quote, fact, joke, advice, greet };
