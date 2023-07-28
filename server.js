@@ -6,19 +6,22 @@ const { date, time } = require("./src/datentime");
 const { bully, quote, joke, fact, advice, greet } = require("./src/fun");
 const { convert } = require("./src/convert");
 const { test, templating } = require("./src/test");
-const { auth, tool, profile } = require("./src/question");
-// const { getAllUser, signup } = require("./controllers/user-controller");
+const {
+  getAllUser,
+  addUser,
+  delUser,
+  authUser,
+} = require("./controllers/user-controller");
 
 router.get("/convert", (req, res) => {
   res.send(convert(req.query));
 });
 
-// router.get("/userData", getAllUser);
-// router.post("/addUser", signup);
+router.get("/userData", getAllUser);
+router.post("/addUser", addUser);
+router.post("/delUser", delUser);
+router.post("/authUser", authUser);
 router.get("/template", templating);
-router.get("/auth", auth);
-router.get("/tool", tool);
-router.get("/profile", profile);
 router.get("/time", time);
 router.get("/date", date);
 router.get("/bully", bully);
