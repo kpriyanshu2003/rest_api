@@ -39,5 +39,5 @@ const userSchema = new mongoose_1.Schema({
         required: true,
         minlength: 6,
     },
-});
+}, { versionKey: false });
 exports.default = mongoose_1.default.model("User", userSchema);

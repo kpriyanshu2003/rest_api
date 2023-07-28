@@ -13,60 +13,44 @@ function readFile(fileName) {
         return JSON.parse(data);
     }
     catch (e) {
-        console.error("Error reading facts.json : ", e.message);
+        console.error(`Error reading ${fileName}:`, e.message);
         return [];
     }
 }
-function bully(req, res) {
-    const data = readFile("bully.json");
-    const random = data[Math.floor(Math.random() * data.length)];
+function getRandomItem(data) {
+    const randomIndex = Math.floor(Math.random() * data.length);
+    return data[randomIndex];
+}
+function randomResponse(req, res, fileName, key) {
+    const data = readFile(fileName);
+    const random = getRandomItem(data);
     if (random)
-        res.status(200).json({ bully: random });
+        res.status(200).json({ [key]: random });
     else
-        res.status(500).json({ bully: "Internal Server Error" });
+        res.status(500).json({ [key]: "Internal Server Error" });
+}
+function bully(req, res) {
+    randomResponse(req, res, "bully.json", "bully");
 }
 exports.bully = bully;
 function quote(req, res) {
-    const data = readFile("quotes.json");
-    const random = data[Math.floor(Math.random() * data.length)];
-    if (random)
-        res.status(200).json({ quote: random });
-    else
-        res.status(500).json({ quote: "Internal Server Error" });
+    randomResponse(req, res, "quotes.json", "quote");
 }
 exports.quote = quote;
 function joke(req, res) {
-    const data = readFile("jokes.json");
-    const random = data[Math.floor(Math.random() * data.length)];
-    if (random)
-        res.status(200).json({ joke: random });
-    else
-        res.status(500).json({ joke: "Internal Server Error" });
+    randomResponse(req, res, "jokes.json", "joke");
 }
 exports.joke = joke;
 function fact(req, res) {
-    const data = readFile("facts.json");
-    const random = data[Math.floor(Math.random() * data.length)];
-    if (random)
-        res.status(200).json({ fact: random });
-    else
-        res.status(500).json({ fact: "Internal Server Error" });
+    randomResponse(req, res, "facts.json", "fact");
 }
 exports.fact = fact;
 function advice(req, res) {
-    const advice = readFile("advice.json");
-    const random = advice[Math.floor(Math.random() * advice.length)];
-    if (random)
-        res.status(200).json({ advice: random });
-    else
-        res.status(500).json({ advice: "Internal Server Error" });
+    randomResponse(req, res, "advice.json", "advice");
 }
 exports.advice = advice;
 function greet(req, res) {
     const name = req.query.name;
-    if (typeof name === "string")
-        res.json({ message: `Hello ${name}!` });
-    else
-        res.json({ message: "Hello User!" });
+    res.json({ message: `Hello ${name ? name : "User"}!` });
 }
 exports.greet = greet;

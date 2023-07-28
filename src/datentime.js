@@ -23,12 +23,11 @@ function time(req, res) {
         const m = dt.getMinutes() < 10 ? `0${dt.getMinutes()}` : `${dt.getMinutes()}`;
         const s = dt.getSeconds() < 10 ? `0${dt.getSeconds()}` : `${dt.getSeconds()}`;
         const t = `${h}:${m}:${s}`;
-        res
+        return res
             .status(200)
             .json({ time: t, hours: h, minutes: m, seconds: s, timezone: tz });
     }
-    else
-        res.status(400).json({ message: "Invalid Timezone" });
+    return res.status(400).json({ message: "Invalid Timezone" });
 }
 exports.time = time;
 function date(req, res) {
@@ -39,9 +38,10 @@ function date(req, res) {
         const m = dt.getMonth() + 1 < 10 ? `0${dt.getMonth() + 1}` : `${dt.getMonth() + 1}`;
         const y = dt.getFullYear().toString();
         const t = `${d}/${m}/${y}`;
-        res.status(200).json({ date: t, days: d, month: m, year: y, timezone: tz });
+        return res
+            .status(200)
+            .json({ date: t, days: d, month: m, year: y, timezone: tz });
     }
-    else
-        res.status(400).json({ message: "Invalid timezone" });
+    return res.status(400).json({ message: "Invalid timezone" });
 }
 exports.date = date;
