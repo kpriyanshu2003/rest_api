@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authUser = exports.delUser = exports.addUser = exports.getAllUser = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const User_1 = __importDefault(require("../model/User"));
 function getAllUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -37,7 +38,9 @@ function addUser(req, res) {
                     .status(400)
                     .json({ message: "User Already Exists! Login Instead" });
             }
-            const user = new User_1.default({ name, email, password });
+            // Hash the password before saving it to the database
+            const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+            const user = new User_1.default({ name, email, password: hashedPassword });
             yield user.save();
             return res.status(201).json({ user });
         }
@@ -69,15 +72,23 @@ function delUser(req, res) {
 exports.delUser = delUser;
 function authUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { email } = req.body;
+        const { email, password } = req.body;
         try {
             const existingUser = yield User_1.default.findOne({ email });
-            if (existingUser) {
-                return res.status(200).json({ message: "You are an authorised user." });
+            if (!existingUser) {
+                return res.status(401).json({
+                    message: "You are not an authorized user.",
+                    information: "Add yourself by sending a POST request at /addUser. Or include email: dummyEmail@example.com and password: dummyPassword to see functionality.",
+                });
+            }
+            // Compare the provided password with the hashed password in the database
+            const isPasswordValid = yield bcrypt_1.default.compare(password, existingUser.password);
+            if (isPasswordValid) {
+                return res.status(200).json({ message: "You are an authorized user." });
             }
             else {
                 return res.status(401).json({
-                    message: "You are not an authorised user. Send a POST request at /addUser. Or include email: dummyuser@example.com to see the functionality.",
+                    message: "Invalid email or password.",
                 });
             }
         }
