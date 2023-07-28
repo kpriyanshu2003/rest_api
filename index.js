@@ -21,6 +21,15 @@ app.set("view engine", "mustache");
 app.set("views", __dirname + "/views");
 
 app.use(express.static(path.join(__dirname, "static")));
+
+app.get("/docs", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "docs.html"));
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "404.html"));
+});
+
 const server = require("./server");
 app.use("/", server);
 
