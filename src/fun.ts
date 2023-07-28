@@ -51,7 +51,7 @@ function advice(req: Request, res: Response) {
 function greet(req: Request, res: Response) {
   const name = req.query.name as string;
   if (typeof name === "string") res.json({ message: `Hello ${name}!` });
-  res.json({ message: "Hello User!" });
+  else res.json({ message: "Hello User!" });
 }
 
 export { bully, quote, fact, joke, advice, greet };

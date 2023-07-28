@@ -66,6 +66,7 @@ function greet(req, res) {
     const name = req.query.name;
     if (typeof name === "string")
         res.json({ message: `Hello ${name}!` });
-    res.json({ message: "Hello User!" });
+    else
+        res.json({ message: "Hello User!" });
 }
 exports.greet = greet;

@@ -29,8 +29,7 @@ function time(req: Request, res: Response) {
     res
       .status(200)
       .json({ time: t, hours: h, minutes: m, seconds: s, timezone: tz });
-  }
-  res.status(400).json({ message: "Invalid Timezone" });
+  } else res.status(400).json({ message: "Invalid Timezone" });
 }
 
 function date(req: Request, res: Response) {
@@ -43,8 +42,7 @@ function date(req: Request, res: Response) {
     const y = dt.getFullYear().toString();
     const t = `${d}/${m}/${y}`;
     res.status(200).json({ date: t, days: d, month: m, year: y, timezone: tz });
-  }
-  res.status(400).json({ message: "Invalid timezone" });
+  } else res.status(400).json({ message: "Invalid timezone" });
 }
 
 export { time, date };

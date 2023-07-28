@@ -27,7 +27,8 @@ function time(req, res) {
             .status(200)
             .json({ time: t, hours: h, minutes: m, seconds: s, timezone: tz });
     }
-    res.status(400).json({ message: "Invalid Timezone" });
+    else
+        res.status(400).json({ message: "Invalid Timezone" });
 }
 exports.time = time;
 function date(req, res) {
@@ -40,6 +41,7 @@ function date(req, res) {
         const t = `${d}/${m}/${y}`;
         res.status(200).json({ date: t, days: d, month: m, year: y, timezone: tz });
     }
-    res.status(400).json({ message: "Invalid timezone" });
+    else
+        res.status(400).json({ message: "Invalid timezone" });
 }
 exports.date = date;
