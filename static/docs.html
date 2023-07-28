@@ -4,9 +4,173 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-ubuntu {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .font-fira {
+        font-family: "Fira Sans", sans-serif;
+      }
+      table {
+        border: 1px solid #b3adad;
+        border-collapse: collapse;
+        padding: 5px;
+      }
+      table th {
+        border: 1px solid #b3adad;
+        padding: 5px 0;
+        background: #f0f0f0;
+        color: #313030;
+        cursor: default;
+      }
+      table td {
+        border: 1px solid #b3adad;
+        text-align: center;
+        padding: 5px 0;
+        background: #ffffff;
+        color: #313030;
+        cursor: default;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    Documentation Page. Contents from HomePage will be shifted here with a
-    beetter UI.
+  <body class="sm:p-4 w-screen">
+    <span class="text-4xl font-fira font-medium ml-3">Documentation</span>
+    <table class="w-full mt-8">
+      <thead>
+        <tr>
+          <th>Endpoint</th>
+          <th>Request Type</th>
+          <th>Parameters</th>
+          <th>Parameter Requirement</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td onclick="window.location.href= '/'" class="cursor-pointer">/</td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET home page</td>
+        </tr>
+
+        <tr>
+          <td onclick="window.location.href= '/docs'" class="cursor-pointer">
+            /docs
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET documentation</td>
+        </tr>
+        <tr>
+          <td onclick="window.location.href= '/404'" class="cursor-pointer">
+            /404
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET Error Page</td>
+        </tr>
+        <tr>
+          <td
+            onclick="window.location.href= '/time?zone=Europe/London'"
+            class="cursor-pointer"
+          >
+            /time
+          </td>
+          <td>GET</td>
+          <td>zone=timezone</td>
+          <td>required</td>
+          <td>GET time</td>
+        </tr>
+        <tr>
+          <td
+            onclick="window.location.href= '/date?zone=Europe/London'"
+            class="cursor-pointer"
+          >
+            /date
+          </td>
+          <td>GET</td>
+          <td>zone=timezone</td>
+          <td>required</td>
+          <td>GET date<br /></td>
+        </tr>
+        <tr>
+          <td onclick="window.location.href= '/fact'" class="cursor-pointer">
+            /fact
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET a random fact</td>
+        </tr>
+        <tr>
+          <td onclick="window.location.href= '/bully'" class="cursor-pointer">
+            /bully
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET a random insult</td>
+        </tr>
+        <tr>
+          <td onclick="window.location.href= '/joke'" class="cursor-pointer">
+            /joke
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET a random joke</td>
+        </tr>
+        <tr>
+          <td
+            onclick="window.location.href= '/greet?name=John Doe'"
+            class="cursor-pointer"
+          >
+            /greet
+          </td>
+          <td>GET</td>
+          <td>name=string</td>
+          <td>optional</td>
+          <td>Greets the user</td>
+        </tr>
+        <tr>
+          <td
+            onclick="window.location.href= '/convert?type=dec&value=911'"
+            class="cursor-pointer"
+          >
+            /convert
+          </td>
+          <td>GET</td>
+          <td>type=[bin,dec,oct,hex] &amp; value=number</td>
+          <td>required</td>
+          <td>Convert any of bin, oct, dec, hex to every other</td>
+        </tr>
+        <tr>
+          <td
+            onclick="window.location.href= '/template'"
+            class="cursor-pointer"
+          >
+            /template
+          </td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET a page created by Mustache Template Engine</td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
