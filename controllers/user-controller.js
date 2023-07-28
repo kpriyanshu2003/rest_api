@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = exports.getAllUser = void 0;
+exports.authUser = exports.delUser = exports.addUser = exports.getAllUser = void 0;
 const User_1 = __importDefault(require("../model/User"));
 function getAllUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,31 +27,64 @@ function getAllUser(req, res) {
     });
 }
 exports.getAllUser = getAllUser;
-function signup(req, res) {
+function addUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { name, email, password } = req.body;
-        let existingUser;
         try {
-            existingUser = yield User_1.default.findOne({ email });
+            const existingUser = yield User_1.default.findOne({ email });
+            if (existingUser) {
+                return res
+                    .status(400)
+                    .json({ message: "User Already Exists! Login Instead" });
+            }
+            const user = new User_1.default({ name, email, password });
+            yield user.save();
+            return res.status(201).json({ user });
         }
         catch (e) {
-            console.log(e);
+            console.error(e);
+            res.status(500).json({ message: "Internal Server Error" });
         }
-        if (existingUser) {
-            res.status(400).json({ message: "User Already Exists ! Login Instead" });
-        }
-        const user = new User_1.default({
-            name,
-            email,
-            password,
-        });
-        try {
-            user.save();
-        }
-        catch (e) {
-            console.log(e);
-        }
-        res.status(201).json({ user });
     });
 }
-exports.signup = signup;
+exports.addUser = addUser;
+function delUser(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { email } = req.body;
+        try {
+            const existingUser = yield User_1.default.findOneAndDelete({ email });
+            if (!existingUser) {
+                return res.status(404).json({ message: "User does not exist" });
+            }
+            return res
+                .status(200)
+                .json({ message: "User deleted successfully", email });
+        }
+        catch (e) {
+            console.error(e);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    });
+}
+exports.delUser = delUser;
+function authUser(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { email } = req.body;
+        try {
+            const existingUser = yield User_1.default.findOne({ email });
+            if (existingUser) {
+                return res.status(200).json({ message: "You are an authorised user." });
+            }
+            else {
+                return res.status(401).json({
+                    message: "You are not an authorised user. Send a POST request at /addUser. Or include email: dummyuser@example.com to see the functionality.",
+                });
+            }
+        }
+        catch (e) {
+            console.error(e);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    });
+}
+exports.authUser = authUser;

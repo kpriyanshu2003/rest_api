@@ -11,28 +11,58 @@ async function getAllUser(req: Request, res: Response) {
   }
 }
 
-async function signup(req: Request, res: Response) {
+async function addUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
-  let existingUser;
+
   try {
-    existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User Already Exists! Login Instead" });
+    }
+
+    const user = new User({ name, email, password });
+    await user.save();
+    return res.status(201).json({ user });
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-  if (existingUser) {
-    res.status(400).json({ message: "User Already Exists ! Login Instead" });
-  }
-  const user = new User({
-    name,
-    email,
-    password,
-  });
-  try {
-    user.save();
-  } catch (e) {
-    console.log(e);
-  }
-  res.status(201).json({ user });
 }
 
-export { getAllUser, signup };
+async function delUser(req: Request, res: Response) {
+  const { email } = req.body;
+  try {
+    const existingUser = await User.findOneAndDelete({ email });
+    if (!existingUser) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+    return res
+      .status(200)
+      .json({ message: "User deleted successfully", email });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+async function authUser(req: Request, res: Response) {
+  const { email } = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(200).json({ message: "You are an authorised user." });
+    } else {
+      return res.status(401).json({
+        message:
+          "You are not an authorised user. Send a POST request at /addUser. Or include email: dummyuser@example.com to see the functionality.",
+      });
+    }
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export { getAllUser, addUser, delUser, authUser };
