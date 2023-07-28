@@ -14,6 +14,11 @@
       href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="./resources/favicon.png"
+    />
     <style>
       .font-ubuntu {
         font-family: "Ubuntu Mono", monospace;
@@ -51,7 +56,7 @@
         <tr>
           <th>Endpoint</th>
           <th>Request Type</th>
-          <th>Parameters</th>
+          <th>Parameters(GET) / Body(POST)</th>
           <th>Parameter Requirement</th>
           <th>Description</th>
         </tr>
@@ -169,6 +174,34 @@
           <td>-</td>
           <td>-</td>
           <td>GET a page created by Mustache Template Engine</td>
+        </tr>
+        <tr>
+          <td>/userData</td>
+          <td>GET</td>
+          <td>-</td>
+          <td>-</td>
+          <td>GET all users in the database.</td>
+        </tr>
+        <tr>
+          <td>/addUser</td>
+          <td>POST</td>
+          <td>{ name: string, email: string, password }</td>
+          <td>all: required, email: unique, password: minLen(6)</td>
+          <td>Store user details in the database</td>
+        </tr>
+        <tr>
+          <td>/delUser</td>
+          <td>POST</td>
+          <td>{ email: string }</td>
+          <td>required</td>
+          <td>Remove a user from database</td>
+        </tr>
+        <tr>
+          <td>/authUser</td>
+          <td>POST</td>
+          <td>{ email:string, password: string }</td>
+          <td>required</td>
+          <td>Check for a user in database</td>
         </tr>
       </tbody>
     </table>
