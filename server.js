@@ -12,15 +12,11 @@ const {
   delUser,
   authUser,
 } = require("./controllers/user-controller");
+const { emailValidation, passwordValidaton } = require("./src/validation");
+const { dict } = require("./src/utils");
 
-router.get("/convert", (req, res) => {
-  res.send(convert(req.query));
-});
-
+router.get("/convert", convert);
 router.get("/userData", getAllUser);
-router.post("/addUser", addUser);
-router.post("/delUser", delUser);
-router.post("/authUser", authUser);
 router.get("/template", templating);
 router.get("/time", time);
 router.get("/date", date);
@@ -30,17 +26,13 @@ router.get("/advice", advice);
 router.get("/fact", fact);
 router.get("/quote", quote);
 router.get("/greet", greet);
+router.get("/dict", dict);
+router.get("/test", test);
 
-router.get("/test", (req, res) => {
-  console.log("\n------------------");
-  console.log("Body ", req.body);
-  console.log("Query ", req.query);
-  console.log("URL ", req.url);
-  console.log("Params ", req.params);
-  console.log("User IP ", req.ip);
-  console.log("User IPs ", req.ips);
-  console.log(req.path);
-  res.send(test(req.query));
-});
+router.post("/addUser", addUser);
+router.post("/delUser", delUser);
+router.post("/authUser", authUser);
+router.post("/emailValidate", emailValidation);
+router.post("/passwordValidate", passwordValidaton);
 
 module.exports = router;
