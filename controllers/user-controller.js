@@ -38,7 +38,6 @@ function addUser(req, res) {
                     .status(400)
                     .json({ message: "User Already Exists! Login Instead" });
             }
-            // Hash the password before saving it to the database
             const hashedPassword = yield bcrypt_1.default.hash(password, 10);
             const user = new User_1.default({ name, email, password: hashedPassword });
             yield user.save();
@@ -81,7 +80,6 @@ function authUser(req, res) {
                     information: "Add yourself by sending a POST request at /addUser. Or include email: dummyEmail@example.com and password: dummyPassword to see functionality.",
                 });
             }
-            // Compare the provided password with the hashed password in the database
             const isPasswordValid = yield bcrypt_1.default.compare(password, existingUser.password);
             if (isPasswordValid) {
                 return res.status(200).json({ message: "You are an authorized user." });

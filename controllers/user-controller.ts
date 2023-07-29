@@ -22,10 +22,7 @@ async function addUser(req: Request, res: Response) {
         .status(400)
         .json({ message: "User Already Exists! Login Instead" });
     }
-
-    // Hash the password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
     return res.status(201).json({ user });
@@ -62,8 +59,6 @@ async function authUser(req: Request, res: Response) {
           "Add yourself by sending a POST request at /addUser. Or include email: dummyEmail@example.com and password: dummyPassword to see functionality.",
       });
     }
-
-    // Compare the provided password with the hashed password in the database
     const isPasswordValid = await bcrypt.compare(
       password,
       existingUser.password
